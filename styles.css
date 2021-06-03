@@ -1,0 +1,10 @@
+.week_day {
+    display: inline-block;
+    max-width: 150px;
+    padding: 20px;
+    margin: -1px;
+}
+
+.week_day > p {
+    text-align: center;
+}
