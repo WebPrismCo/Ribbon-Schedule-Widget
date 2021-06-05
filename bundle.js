@@ -6,6 +6,16 @@ var dayjs = require('dayjs');
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
+
+//load external css
+var link = document.createElement( "link" );
+link.href = "https://raw.githubusercontent.com/WebPrismCo/Ribbon-Schedule-Widget/main/styles.css";
+link.type = "text/css";
+link.rel = "stylesheet";
+link.media = "screen,print";
+
+document.getElementsByTagName( "head" )[0].appendChild( link );
+
 //basic state
 let refDay = dayjs();
 let weekStart = dates.getWeekStart(refDay);
