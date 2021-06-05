@@ -171,7 +171,7 @@ const buildEventList = (ribbonEvents) => {
     list_container.innerHTML = "";
 
     if(ribbonEvents.length == 0){
-        list_container.innerHTML = "<div><img height='100px' width='100px src='' alt='empty glass by Waiyi Fung from the Noun Project'><p>No Events Today</p></div>"
+        list_container.innerHTML = `<div><img height='100px' width='100px src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@latest/assets/noun_empty%20glass_1245571.svg" alt='empty glass by Waiyi Fung from the Noun Project'><p>No Events Today</p></div>`;
     } else {
         ribbonEvents.forEach((rEvent) => {
             list_container.appendChild(buildEventLineItem(rEvent))
