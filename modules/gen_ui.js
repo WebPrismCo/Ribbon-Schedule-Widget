@@ -3,7 +3,7 @@ var dayjs = require('dayjs');
 const buildDay = (d) => {
     let new_elem = document.createElement("div");
     new_elem.id = d.format("DDMMYYYY");
-    new_elem.innerHTML = `<p>${d.format("dddd")}</p><p>${d.format("MMM DD")}</p>`;
+    new_elem.innerHTML = `<p class="day_of_week">${d.format("ddd").toUpperCase()}</p><p>${d.format("MMM D")}</p>`;
     
     new_elem.classList.add("week_day");
     if( d.isBefore(dayjs().subtract(1, 'day')) ){
@@ -51,8 +51,9 @@ const buildEventLineItem = (e) => {
     signUpButton.innerHTML = `<a class="sign_up_button" href="${e.link}">Sign Up</a>`;
 
     if( e.image2 !== null){
-        let teacherImg = document.createElement('img');
-        teacherImg.src = e.image2;
+        let teacherImg = document.createElement('div');
+        teacherImg.style.backgroundImage = `url(${encodeURI(e.image2)})`;
+        teacherImg.style.backgroundSize = 'cover';
         teacherImg.classList.add("teacher_img");
 
         lineItem.appendChild(teacherImg);
@@ -60,7 +61,7 @@ const buildEventLineItem = (e) => {
 
     let eTitle = document.createElement("div");
     eTitle.classList.add("event_title");
-    eTitle.innerHTML = `<h1>${e.title}</h1>`;
+    eTitle.innerHTML = `<span>${e.title}</span>`;
 
     lineItem.appendChild(eTitle)
 
@@ -77,7 +78,7 @@ const buildEventList = (ribbonEvents) => {
     list_container.innerHTML = "";
 
     if(ribbonEvents.length == 0){
-        list_container.innerHTML = `<div><img height='100px' width='100px src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@latest/assets/noun_empty%20glass_1245571.svg" alt='empty glass by Waiyi Fung from the Noun Project'><p>No Events Today</p></div>`;
+        list_container.innerHTML = `<div class="no_events"><img height='100px' width='100px' src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@latest/assets/noun_empty_glass_1245571.png" alt='empty glass by Waiyi Fung from the Noun Project'><p>No Events Today</p></div>`;
     } else {
         ribbonEvents.forEach((rEvent) => {
             list_container.appendChild(buildEventLineItem(rEvent))

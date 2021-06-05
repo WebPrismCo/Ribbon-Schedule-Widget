@@ -77,7 +77,7 @@ const setRefDay = (d) => {
 
     console.log("setting ref day");
 
-    document.getElementById("selected_date").innerHTML = dayjs(d, "DDMMYYYY").format("dddd, MMMM DD, YYYY")
+    document.getElementById("selected_date").innerHTML = dayjs(d, "DDMMYYYY").format("dddd, MMMM D, YYYY")
 }
 
 initRibbon().then((data) => {
