@@ -1,10 +1,121 @@
+#ribbon-schedule {
+    max-width: 960px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-weight: 300;
+    margin: 0px;
+}
+
+#week_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .week_day {
-    display: inline-block;
-    max-width: 150px;
+    flex: 1;
     padding: 20px;
     margin: -1px;
 }
 
 .week_day > p {
     text-align: center;
+}
+
+.in_past {
+    opacity: 40%;
+}
+
+.week_day > * {
+    pointer-events: none;
+}
+
+.prevButton, .nextButton {
+    display: inline-block;
+    position: relative;
+    padding: 10px;
+}
+
+button {
+    padding: 9px 15px;
+    background-color: #3d3d3d;
+    color: #fff;
+    border: none;
+}
+
+.selected_day {
+    opacity: 100%;
+    background-color: #3d3d3d;
+    border-radius: 6px;
+    color: #fff;
+}
+
+.today_container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 20px 0px;
+    padding: 10px 18px;
+    border: 1px solid #0000001a;
+    border-radius: 6px;
+}
+
+.today_container > span {
+    /* align-self: flex-start; */
+}
+
+.today_container > button {
+    margin-left: auto;
+}
+
+.schedule_item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #3d3d3d11;
+    padding: 40px 18px;
+}
+
+.event_list_container > :first-child {
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+.event_list_container > div {
+    border-bottom: 1px solid #fff;
+}
+
+.event_list_container > :last-child {
+    border-bottom: 0px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+
+.schedule_item > :nth-child(2){
+    margin: 0px 40px;
+}
+
+.schedule_item > .event_title {
+    margin: 0px auto 0px 40px;
+}
+
+.class_time {
+    font-weight: 700;
+}
+
+.teacher_img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+
+.sign_up_button {
+    padding: 9px 15px;
+    background-color: #fff;
+    border: 1px solid #0000001a;
+    color: #3d3d3d;
+    text-decoration: none;
 }

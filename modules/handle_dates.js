@@ -12,7 +12,7 @@ const getWeekStart = (day) => {
         case 0:
             return day;
         default:
-            return dayjs().subtract(dayOfWeek, 'day');
+            return day.subtract(dayOfWeek, 'day');
     }
 }
 
@@ -34,15 +34,34 @@ const changeWeek = (iterator, day) => {
     let weekStart = getWeekStart(day);
 
     switch(iterator){
-        case -1:
+        case 0:
             return dayjs(weekStart).subtract(7, 'day');
         case 1:
             return dayjs(weekStart).add(7, 'day');
     }
 }
 
+const findRefDay = (d, o) => {
+
+    let removeOldRefFlag = undefined || o;
+
+    if(removeOldRefFlag !== undefined){
+        let old_ref = document.querySelectorAll('.selected_day');
+        old_ref[0].classList.remove('selected_day');
+
+        let selectedDay = document.getElementById(d.format("DDMMYYYY"));
+        selectedDay.classList.add('selected_day');
+    } else {
+        let selectedDay = document.getElementById(d.format("DDMMYYYY"));
+        selectedDay.classList.add('selected_day');
+    }
+    
+
+}
+
 module.exports = {
     changeWeek: changeWeek,
     initWeek: initWeek,
-    getWeekStart: getWeekStart
+    getWeekStart: getWeekStart,
+    findRefDay: findRefDay
 }
