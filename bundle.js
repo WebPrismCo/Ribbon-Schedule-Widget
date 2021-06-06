@@ -8,7 +8,7 @@ dayjs.extend(customParseFormat);
 
 
 //load external css
-var cssId = 'myCss';  // you could encode the css path itself to generate id..
+var cssId = 'ribbon-schedule-custom-css';  // you could encode the css path itself to generate id..
 if (!document.getElementById(cssId))
 {
     var head  = document.getElementsByTagName('head')[0];
@@ -20,8 +20,6 @@ if (!document.getElementById(cssId))
     link.media = 'all';
     head.appendChild(link);
 }
-
-document.getElementsByTagName( "head" )[0].appendChild( link );
 
 //basic state
 let refDay = dayjs();
@@ -114,7 +112,7 @@ var dayjs = require('dayjs');
 const buildDay = (d) => {
     let new_elem = document.createElement("div");
     new_elem.id = d.format("DDMMYYYY");
-    new_elem.innerHTML = `<p class="day_of_week">${d.format("ddd").toUpperCase()}</p><p>${d.format("MMM D")}</p>`;
+    new_elem.innerHTML = `<p class="day_of_week">${d.format("ddd").toUpperCase()}</p><p class="short_date">${d.format("MMM D")}</p>`;
     
     new_elem.classList.add("week_day");
     if( d.isBefore(dayjs().subtract(1, 'day')) ){

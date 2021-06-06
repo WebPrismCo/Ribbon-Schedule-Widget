@@ -7,7 +7,7 @@ dayjs.extend(customParseFormat);
 
 
 //load external css
-var cssId = 'myCss';  // you could encode the css path itself to generate id..
+var cssId = 'ribbon-schedule-custom-css';  // you could encode the css path itself to generate id..
 if (!document.getElementById(cssId))
 {
     var head  = document.getElementsByTagName('head')[0];
@@ -19,8 +19,6 @@ if (!document.getElementById(cssId))
     link.media = 'all';
     head.appendChild(link);
 }
-
-document.getElementsByTagName( "head" )[0].appendChild( link );
 
 //basic state
 let refDay = dayjs();
