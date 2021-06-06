@@ -56,7 +56,7 @@
 .prevButton, .nextButton {
     display: inline-block;
     position: relative;
-    padding: 10px;
+    padding: 18px;
 }
 
 button {
@@ -82,10 +82,6 @@ button {
     border-radius: 6px;
 }
 
-.today_container > span {
-    /* align-self: flex-start; */
-}
-
 .today_container > button {
     margin-left: auto;
 }
@@ -98,16 +94,20 @@ button {
     padding: 40px 18px;
 }
 
-.event_list_container > :first-child {
+.event_list_container > ul > :first-child {
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
 }
 
-.event_list_container > div {
-    border-bottom: 1px solid #fff;
+.event_list_container > ul > li {
+    border-bottom: 2px solid #fff;
 }
 
-.event_list_container > :last-child {
+.event_list_container > ul {
+    padding-left: 0px;
+}
+
+.event_list_container > ul > :last-child {
     border-bottom: 0px;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -134,6 +134,15 @@ button {
     font-weight: 700;
 }
 
+.class_location_container {
+    max-width: 140px;
+}
+
+.class_location, .teacher_name {
+    word-wrap: normal;
+    font-weight: 400;
+}
+
 .teacher_img {
     height: 60px;
     width: 60px;
@@ -148,4 +157,25 @@ button {
     border: 1px solid var(--border-color);
     color:  var(--signup-button-font-color);
     text-decoration: none;
+}
+
+.filter_container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 5px 18px;
+}
+
+.filter_container > :first-child {
+    margin-right: 18px;
+}
+
+.list_filter {
+    padding: 9px 15px;
+    width: 140px;
+    border-radius: 2px;
+}
+
+.list_filter:focus {
+    outline: none;
 }

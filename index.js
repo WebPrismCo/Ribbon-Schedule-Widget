@@ -3,6 +3,7 @@ var ribbon = require('./modules/ribbon');
 var ui = require('./modules/gen_ui');
 var dayjs = require('dayjs');
 var customParseFormat = require('dayjs/plugin/customParseFormat');
+const List = require('list.js');
 dayjs.extend(customParseFormat);
 
 
@@ -27,6 +28,7 @@ let week = dates.initWeek(weekStart);
 let container = document.getElementById("ribbon-schedule");
 let ribbonEvents, 
     eventsThisWeek,
+    ribbon_event_list,
     refDayEvents;
 //end basic state
 
@@ -44,6 +46,7 @@ const setWeekEvents = (data) => {
 const resetEventList = () => {
     setWeekEvents(ribbonEvents);
     ui.buildEventList(refDayEvents);
+    addListeners();
 }
 
 const addListeners = () => {
@@ -52,9 +55,40 @@ const addListeners = () => {
     wd_elems.forEach((el) => {
         el.addEventListener('click', (e) => {
             setRefDay(e.target.id);
-            resetEventList()
+            resetEventList();
         })
     })
+
+    let filter_elems = document.querySelectorAll(".list_filter");
+    filter_elems.forEach((el) => {
+        el.addEventListener('change', (e) => {
+            ribbon_event_list.search(e.target.value);
+        });
+    })
+}
+
+const init_list = () => {
+    let eventList = document.getElementById("event_list_container");
+
+    let listOptions = {
+        valueNames: ['teacher_name', 'class_time', 'class_duration', {data: ['id', 'online']},]
+    }
+
+    ribbon_event_list = new List(eventList, listOptions)
+        .on("updated", (e) => {
+            if(e.matchingItems.length === 0){
+                let em = document.createElement("div");
+                em.innerHTML = ui.returnEmptyMessage();
+
+                eventList.appendChild(em);
+            } else {
+                let emr = document.querySelectorAll(".no_events");
+
+                if (emr.length > 0){
+                    emr[0].parentNode.removeChild(emr[0]);
+                }
+            }
+        });
 }
 
 const initSchedule = () => {
@@ -62,6 +96,7 @@ const initSchedule = () => {
     dates.findRefDay(refDay);
     setWeekEvents(ribbonEvents);
     ui.buildEventList(refDayEvents);
+    init_list();
     addListeners();
 }
 
@@ -90,8 +125,6 @@ const setRefDay = (d) => {
     refDay = new_refDay;
     dates.findRefDay(new_refDay, 1);
 
-    console.log("setting ref day");
-
     document.getElementById("selected_date").innerHTML = dayjs(d, "DDMMYYYY").format("dddd, MMMM D, YYYY")
 }
 
@@ -99,6 +132,8 @@ initRibbon().then((data) => {
     ribbonEvents = data;
     initSchedule();
 });
+
+
 
 module.exports = {
     toggleWeek: toggleWeek,

@@ -12,6 +12,20 @@ const getRibbonData = async () => {
     return ribbonRes
 }
 
+const getUniqueTeachers = (data) => {
+    let teachArray = data.map((e) => e.teacher || "No Teacher Set");
+
+    switch (data.length){
+        case 0:
+            return [];
+        default:
+            let uniqTeach = new Set(teachArray);
+            return uniqTeach;
+    }
+
+    
+}
+
 const getRefDayEvents = (data, refDay) => {
     let todaysEvents = data.filter(event => {
         return dayjs(event.dateTime).isSame(refDay, 'day');
@@ -35,5 +49,6 @@ const getWeekEvents = (data, first, last) => {
 module.exports = {
     getRibbonData: getRibbonData,
     getWeekEvents: getWeekEvents,
-    getRefDayEvents: getRefDayEvents
+    getRefDayEvents: getRefDayEvents,
+    getUniqueTeachers: getUniqueTeachers
 }
