@@ -79,7 +79,6 @@ const init_list = () => {
             if(e.matchingItems.length === 0){
                 let em = document.createElement("div");
                 em.innerHTML = ui.returnEmptyMessage();
-
                 eventList.appendChild(em);
             } else {
                 let emr = document.querySelectorAll(".no_events");

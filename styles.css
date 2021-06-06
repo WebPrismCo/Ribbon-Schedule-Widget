@@ -9,7 +9,6 @@
     --signup-button-bkg-color: #fff;
 }
 
-
 #ribbon-schedule {
     max-width: 960px;
     font-family: var(--font-family);
@@ -120,11 +119,6 @@ button {
     align-items: center;
 }
 
-
-.schedule_item > :nth-child(2){
-    margin: 0px 40px;
-}
-
 .schedule_item > .event_title {
     font-weight: 700;
     margin: 0px auto 0px 40px;
@@ -134,13 +128,32 @@ button {
     font-weight: 700;
 }
 
-.class_location_container {
-    max-width: 140px;
+.schedule_item > :nth-child(2){
+    margin: 0px 40px;
 }
 
-.class_location, .teacher_name {
+.mobile_loc {
+    display: none;
+}
+
+.teacher_name {
     word-wrap: normal;
     font-weight: 400;
+}
+
+.class_location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.class_location > img {
+    margin-right: 4px;
+}
+
+.livestream_label {
+    font-size: 14px;
+    font-weight: 300;
 }
 
 .teacher_img {
@@ -178,4 +191,117 @@ button {
 
 .list_filter:focus {
     outline: none;
+}
+
+.disabled_sign_up {
+    opacity: 55%;
+    cursor: no-drop;
+}
+
+@media screen and (min-width: 769px){
+    .mobile_loc {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #ribbon-schedule {
+        max-width: 768px;
+        width: 100%;
+        /* overflow: hidden; */
+    }
+    .week_day {
+        padding: 10px;
+    }
+    .desktop_loc {
+        display: none;
+    }
+    .teacher_img {
+        margin-left: 40px;
+    }
+}
+
+@media screen and (max-width: 675px) {
+    #ribbon-schedule {
+        max-width: 675px;
+    }
+    .schedule_item > :nth-child(2){
+        margin: 0px 10px;
+    }
+    .desktop_loc {
+        display: none;
+    }
+    .teacher_img {
+        margin-left: 20px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .schedule_item {
+        display: block;
+        padding: 20px 18px 20px 18px;
+    }
+    .schedule_item > .event_title {
+        text-align: center;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .time_dur {
+        text-align: center;
+    }
+    .class_location {
+        margin: 10px 0px 10px 0px;
+    }
+    .schedule_item > * {
+        margin: 20px auto 20px auto;
+    }
+    .sign_up_button_container {
+        margin-top: 0px;
+        width: 100%;
+        display: flex;
+    }
+    .sign_up_button {
+        margin-top: 30px;
+        text-align: center;
+        display:inline-block;
+        flex: 1;
+    }
+    .disabled_sign_up {
+        margin-top: 30px;
+        text-align: center;
+        display:inline-block;
+        flex: 1;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #ribbon-schedule {
+        max-width: 400px;
+    }
+    #week_container {
+        flex-wrap: wrap;
+        /* align-content: stretch; */
+    }
+    #week_container > .prevButton {
+        flex: 1;
+        min-width: 300px;
+    }
+    .week_day {
+        /* min-width: 60px; */
+    }
+    #week_container > .nextButton {
+        flex: 1;
+        min-width: 300px;
+    }
+    #week_container > .prevButton > button {
+        flex: 1;
+        width: 100%;
+    }
+    #week_container > .nextButton > button {
+        flex: 1;
+        width: 100%;
+    }
+    .filter_container {
+        justify-content: center;
+    }
 }

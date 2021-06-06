@@ -80,7 +80,6 @@ const init_list = () => {
             if(e.matchingItems.length === 0){
                 let em = document.createElement("div");
                 em.innerHTML = ui.returnEmptyMessage();
-
                 eventList.appendChild(em);
             } else {
                 let emr = document.querySelectorAll(".no_events");
@@ -189,7 +188,7 @@ const buildEventLineItem = (e) => {
 
     if(e.online === false){
         live_or_location = e.location;
-    } else live_or_location = "Livestream"
+    } else live_or_location = `<img height="20px" width="20px" src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@main/assets/noun_streaming_55528.png" alt="streaming by Javier Sánchez - javyliu from the Noun Project" ><span class="livestream_label">Livestream</span>`
 
     let lineItem = document.createElement("li");
     lineItem.setAttribute("data-id", dayjs(e.dateTime).format("DDMMYYYY"));
@@ -198,12 +197,14 @@ const buildEventLineItem = (e) => {
     lineItem.innerHTML =   `<div class="time_dur">
                                 <span class="class_time">${dayjs(e.dateTime).format("hh:mm A")}</span><br>
                                 <span class="class_duration">${e.duration} min</span>
+                                <span class="class_location mobile_loc">${live_or_location}</span>
                             </div>
-                            <div class="class_location_container">
+                            <div class="class_location_container desktop_loc">
                                 <span class="class_location">${live_or_location}</span>
                             </div>`;
 
     let signUpButton = document.createElement("div");
+    signUpButton.classList.add("sign_up_button_container");
     signUpButton.innerHTML = `<a class="sign_up_button" href="${e.link}">Sign Up</a>`;
 
     if( e.image2 !== null){
@@ -223,12 +224,27 @@ const buildEventLineItem = (e) => {
 
     if(dayjs(e.dateTime).isBefore(dayjs()) == false ){
         lineItem.appendChild(signUpButton);
+    } else {
+        let passedButton = document.createElement("div");
+        passedButton.classList.add("sign_up_button_container");
+        passedButton.innerHTML = "<div class='sign_up_button disabled_sign_up'>Closed</div>";
+        passedButton.disabled = true;
+
+        lineItem.append(passedButton)
     }
 
     return lineItem;
 }
 
 const returnEmptyMessage = () => {
+    if(document.querySelectorAll(".no_events").length !== 0 ){
+        let emr = document.querySelectorAll(".no_events");
+
+        if (emr.length > 0){
+            emr[0].parentNode.removeChild(emr[0]);
+        }
+    }
+
     return `<div class="no_events"><img height='100px' width='100px' src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@latest/assets/noun_empty_glass_1245571.png" alt='empty glass by Waiyi Fung from the Noun Project'><p>No Events Today</p></div>`
 }
 
