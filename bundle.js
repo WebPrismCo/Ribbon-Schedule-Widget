@@ -17,7 +17,7 @@ if (!document.getElementById(cssId))
     link.id   = cssId;
     link.rel  = 'stylesheet';
     link.type = 'text/css';
-    link.href = "https://raw.githubusercontent.com/WebPrismCo/Ribbon-Schedule-Widget/main/styles.css";
+    link.href = "https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@main/styles.css";
     link.media = 'all';
     head.appendChild(link);
 }
