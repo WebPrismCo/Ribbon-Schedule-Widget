@@ -284,14 +284,11 @@ button {
     }
     #week_container > .prevButton {
         flex: 1;
-        min-width: 300px;
-    }
-    .week_day {
-        /* min-width: 60px; */
+        min-width: 100%;
     }
     #week_container > .nextButton {
         flex: 1;
-        min-width: 300px;
+        min-width: 100%;
     }
     #week_container > .prevButton > button {
         flex: 1;
