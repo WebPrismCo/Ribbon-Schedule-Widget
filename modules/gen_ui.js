@@ -118,7 +118,7 @@ const buildEventList = (ribbonEvents) => {
         });
     }
 
-    buildDropdowns(ribbon.getUniqueTeachers(ribbonEvents), ribbonEvents.length);
+    buildDropdowns(ribbon.getUniqueTeachers(ribbonEvents), ribbonEvents.length, ribbonEvents);
 }
 
 
@@ -184,7 +184,7 @@ const buildTeacherDropdown = (t) => {
 }
 
 
-const buildLocationDropdown = () => {
+const buildEventTypeDropdown = () => {
     let genSelect = document.createElement("select");
     genSelect.classList.add("list_filter");
 
@@ -193,7 +193,44 @@ const buildLocationDropdown = () => {
     return genSelect;
 }
 
-const buildDropdowns = (teachers, length) => {
+const buildLocationDropdown = (ev) => {
+    let genSelect = document.createElement("select");
+    genSelect.classList.add("list_filter");
+
+    let selectAll = document.createElement("option");
+
+    selectAll.value = "";
+    selectAll.innerHTML = "All";
+
+    genSelect.appendChild(selectAll);
+
+    let locations = ev.map((e) => e.location || null);
+
+    let locSet = new Set(locations.filter(l => l !== null));
+
+    locSet.forEach((loc) => {
+        let genOption = document.createElement("option");
+
+        genOption.value = loc;
+        genOption.innerHTML = loc;
+
+        genSelect.appendChild(genOption);
+    });
+
+    let fakeSelect = document.createElement("select");
+    fakeSelect.classList.add("list_filter");
+    fakeSelect.disabled = true;
+    fakeSelect.innerHTML = "<option>Location</option>";
+
+    switch (locSet.size) {
+        case 0:
+            return fakeSelect;
+        default:
+            return genSelect;
+    }
+}
+
+const buildDropdowns = (teachers, length, events) => {
     let filter_container = document.getElementById("filter_container");
 
     if(filter_container.innerHTML !== ""){
@@ -203,13 +240,15 @@ const buildDropdowns = (teachers, length) => {
     if(length > 0){
         let teachDrop = buildTeacherDropdown(teachers);
 
-        if(teachDrop !== undefined){
-            filter_container.appendChild(teachDrop);
-        }
+        if(teachDrop !== undefined) filter_container.appendChild(teachDrop);
     
-        let locDrop = buildLocationDropdown();
+        let stream_or_in_person = buildEventTypeDropdown();
     
-        filter_container.appendChild(locDrop);
+        filter_container.appendChild(stream_or_in_person);
+
+        let location_dropdown = buildLocationDropdown(events);
+
+        if(location_dropdown !== undefined) filter_container.appendChild(location_dropdown);
     }
 }
 

@@ -46,6 +46,7 @@ const setWeekEvents = (data) => {
 const resetEventList = () => {
     setWeekEvents(ribbonEvents);
     ui.buildEventList(refDayEvents);
+    init_list();
     addListeners();
 }
 
@@ -71,7 +72,7 @@ const init_list = () => {
     let eventList = document.getElementById("event_list_container");
 
     let listOptions = {
-        valueNames: ['teacher_name', 'class_time', 'class_duration', {data: ['id', 'online']},]
+        valueNames: ['teacher_name', 'class_time', 'class_duration', 'class_location', {data: ['id', 'online']},]
     }
 
     ribbon_event_list = new List(eventList, listOptions)

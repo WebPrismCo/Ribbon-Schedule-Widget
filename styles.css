@@ -179,9 +179,15 @@ button {
     padding: 5px 18px;
 }
 
-.filter_container > :first-child {
-    margin-right: 18px;
+.filter_container > :nth-child(odd) {
+    margin-left: 18px;
 }
+
+.filter_container > :nth-child(even) {
+    margin-left: 18px;
+}
+
+
 
 .list_filter {
     padding: 9px 15px;
@@ -208,7 +214,6 @@ button {
     #ribbon-schedule {
         max-width: 768px;
         width: 100%;
-        /* overflow: hidden; */
     }
     .week_day {
         padding: 10px;
