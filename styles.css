@@ -300,5 +300,6 @@ button {
     }
     .filter_container {
         justify-content: center;
+        padding: 5px 18px 20px 18px;
     }
 }
