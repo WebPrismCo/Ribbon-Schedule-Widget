@@ -3,8 +3,8 @@ var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
 
-const getRibbonData = async () => {
-    const ribbonRes = fetch("https://api.withribbon.com/api/v1/Events?hostId=6014&token=54ffc5cb91")
+const getRibbonData = async (hostId, token) => {
+    const ribbonRes = fetch(`https://api.withribbon.com/api/v1/Events?hostId=${hostId}&token=${token}`)
     .then(response => response.json())
     .then(data => { return data } )
     .catch((err) => console.log(err));

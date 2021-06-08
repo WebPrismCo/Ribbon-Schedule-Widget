@@ -33,8 +33,12 @@ let ribbonEvents,
     refDayEvents;
 //end basic state
 
-const initRibbon = async () => {
-    let ribbonData = await ribbon.getRibbonData();
+let ribbon_root_tag = document.getElementById('ribbon-schedule-view-scriptroot');
+let got_host_id = ribbon_root_tag.dataset.host
+let got_host_token = ribbon_root_tag.dataset.token;
+
+const initRibbon = async (hostId,token) => {
+    let ribbonData = await ribbon.getRibbonData(hostId,token);
 
     return ribbonData;
 }
@@ -129,7 +133,7 @@ const setRefDay = (d) => {
     document.getElementById("selected_date").innerHTML = dayjs(d, "DDMMYYYY").format("dddd, MMMM D, YYYY")
 }
 
-initRibbon().then((data) => {
+initRibbon(got_host_id,got_host_token).then((data) => {
     ribbonEvents = data;
     initSchedule();
 });
@@ -476,8 +480,8 @@ var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
 
-const getRibbonData = async () => {
-    const ribbonRes = fetch("https://api.withribbon.com/api/v1/Events?hostId=6014&token=54ffc5cb91")
+const getRibbonData = async (hostId, token) => {
+    const ribbonRes = fetch(`https://api.withribbon.com/api/v1/Events?hostId=${hostId}&token=${token}`)
     .then(response => response.json())
     .then(data => { return data } )
     .catch((err) => console.log(err));

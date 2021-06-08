@@ -176,7 +176,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: 5px 18px;
+    padding: 0px 18px 18px 18px;
 }
 
 .filter_container > :nth-child(odd) {
