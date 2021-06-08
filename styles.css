@@ -111,8 +111,8 @@ button {
 
 .event_list_container > ul > :last-child {
     border-bottom: 0px;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: var(--button-border-radius);
+    border-bottom-right-radius: var(--button-border-radius);
 }
 
 .no_events {
