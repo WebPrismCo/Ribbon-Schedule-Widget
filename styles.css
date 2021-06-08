@@ -7,6 +7,7 @@
     --selected-day-highlight: #3d3d3d11;
     --line-item-bkg-color: #3d3d3d11;
     --signup-button-bkg-color: #fff;
+    --button-border-radius: 3px;
 }
 
 #ribbon-schedule {
@@ -63,11 +64,12 @@ button {
     background-color: #3d3d3d;
     color: #fff;
     border: none;
+    border-radius: var(--button-border-radius);
 }
 
 .selected_day {
     opacity: 100%;
-    border-radius: 6px;
+    border-radius: var(--button-border-radius);
     background-color: var(--selected-day-highlight);
 }
 
@@ -78,7 +80,7 @@ button {
     margin: 20px 0px;
     padding: 10px 18px;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: var(--button-border-radius);
 }
 
 .today_container > button {
@@ -94,8 +96,8 @@ button {
 }
 
 .event_list_container > ul > :first-child {
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
+    border-top-right-radius: var(--button-border-radius);
+    border-top-left-radius: var(--button-border-radius);
 }
 
 .event_list_container > ul > li {
@@ -104,6 +106,7 @@ button {
 
 .event_list_container > ul {
     padding-left: 0px;
+    margin: 0px;
 }
 
 .event_list_container > ul > :last-child {
@@ -170,6 +173,7 @@ button {
     border: 1px solid var(--border-color);
     color:  var(--signup-button-font-color);
     text-decoration: none;
+    border-radius: var(--button-border-radius);
 }
 
 .filter_container {
@@ -187,12 +191,10 @@ button {
     margin-left: 18px;
 }
 
-
-
 .list_filter {
     padding: 9px 15px;
     width: 140px;
-    border-radius: 2px;
+    border-radius: var(--button-border-radius);
 }
 
 .list_filter:focus {
@@ -285,7 +287,6 @@ button {
     }
     #week_container {
         flex-wrap: wrap;
-        /* align-content: stretch; */
     }
     #week_container > .prevButton {
         flex: 1;
