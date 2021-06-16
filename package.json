@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "watchify index.js -o bundle.js -v -s bundle",
-    "build": "browserify index.js -o bundle.js -v -s bundle"
+    // "start": "watchify index.js -o bundle.js -v -s bundle",
+    // "build": "browserify index.js -o bundle.js -v -s bundle"
   },
   "author": "",
   "license": "ISC",
