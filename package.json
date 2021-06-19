@@ -10,12 +10,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browserify": "^17.0.0",
+
     "express": "^4.17.1"
   },
   "dependencies": {
     "dayjs": "^1.10.5",
     "list.js": "^2.3.1",
-    "listjs": "^0.1.1"
+    "listjs": "^0.1.1",
+    "browserify": "^17.0.0"
   }
 }

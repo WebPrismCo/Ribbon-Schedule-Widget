@@ -51,10 +51,10 @@ const resetEventList = () => {
     setWeekEvents(ribbonEvents);
     ui.buildEventList(refDayEvents);
     init_list();
-    addListeners();
+    addFilterListeners();
 }
 
-const addListeners = () => {
+const addDayListeners = () => {
     let wd_elems = document.querySelectorAll(".week_day");
 
     wd_elems.forEach((el) => {
@@ -64,6 +64,9 @@ const addListeners = () => {
         })
     })
 
+}
+
+const addFilterListeners = () => {
     let filter_elems = document.querySelectorAll(".list_filter");
     filter_elems.forEach((el) => {
         el.addEventListener('change', (e) => {
@@ -101,7 +104,8 @@ const initSchedule = () => {
     setWeekEvents(ribbonEvents);
     ui.buildEventList(refDayEvents);
     init_list();
-    addListeners();
+    addDayListeners();
+    addFilterListeners();
 }
 
 const resetSchedule = (w) => {
