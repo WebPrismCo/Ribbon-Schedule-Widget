@@ -133,6 +133,8 @@ button {
 
 .schedule_item > :nth-child(2){
     margin: 0px 40px;
+    width: 140px;
+    text-align: left;
 }
 
 .mobile_loc {
@@ -147,7 +149,7 @@ button {
 .class_location {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .class_location > img {
