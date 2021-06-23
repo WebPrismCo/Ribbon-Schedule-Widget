@@ -37,6 +37,11 @@ let ribbon_root_tag = document.getElementById('ribbon-schedule-view-scriptroot')
 let got_host_id = ribbon_root_tag.dataset.host
 let got_host_token = ribbon_root_tag.dataset.token;
 
+let got_teacher = ribbon_root_tag.dataset.teacher;
+let got_eventType = ribbon_root_tag.dataset.eventtype;
+let got_location = ribbon_root_tag.dataset.location;
+
+
 const initRibbon = async (hostId,token) => {
     let ribbonData = await ribbon.getRibbonData(hostId,token);
 
@@ -48,11 +53,70 @@ const setWeekEvents = (data) => {
     refDayEvents = ribbon.getRefDayEvents(data, refDay);
 }
 
+const fire_search = () => {
+    let filters = document.querySelectorAll('.list_filter');
+
+    let filter_string = "";
+
+    filters.forEach((f) => {
+        if(f.disabled == false){
+            console.log(f.value);
+            f.value == "" ? "" :  filter_string = filter_string + f.value + " "
+        }
+    });
+
+    console.log(filter_string);
+
+    ribbon_event_list.search(filter_string);
+}
+
+const setFilterParams = (params) => {
+    console.log(params);
+    let search_string = '';
+
+    function elemSelect(e,v){
+        let doesValExist = document.getElementById(e).querySelector('[value="' + v + '"]');
+
+        if(document.getElementById(e) !== null && doesValExist !== null){
+            document.getElementById(e).value = v;
+        }
+    }
+
+    if(params.teacher !== undefined){
+        elemSelect("teacher_filter", params.teacher);
+
+        search_string = search_string + `"${params.teacher}" `;
+    }
+
+    if(params.eventType !== undefined){
+        elemSelect("eventType_filter", params.eventType.toLowerCase());
+
+        search_string = search_string + `"${params.eventType}" `;
+    }
+
+    if(params.location !== undefined){
+        elemSelect("location_filter", params.location); 
+
+        search_string = search_string + `"${params.location}" `;
+    }
+
+    console.log(search_string);
+
+    ribbon_event_list.search(search_string);
+}
+
 const resetEventList = () => {
     setWeekEvents(ribbonEvents);
     ui.buildEventList(refDayEvents);
     init_list();
-    addFilterListeners();
+    if(refDayEvents.length > 0){
+        addFilterListeners();
+        setFilterParams({
+            teacher: got_teacher,
+            eventType: got_eventType,
+            location: got_location
+        });
+    }
 }
 
 const addDayListeners = () => {
@@ -70,17 +134,25 @@ const addDayListeners = () => {
 const addFilterListeners = () => {
     let filter_elems = document.querySelectorAll(".list_filter");
     filter_elems.forEach((el) => {
-        el.addEventListener('change', (e) => {
-            ribbon_event_list.search(e.target.value);
+        el.addEventListener('change', () => {
+            fire_search();
+            // ribbon_event_list.search(e.target.value);
         });
-    })
+    });
 }
 
 const init_list = () => {
     let eventList = document.getElementById("event_list_container");
 
     let listOptions = {
-        valueNames: ['teacher_name', 'class_time', 'class_duration', 'class_location', {data: ['id', 'online']},]
+        valueNames: [   {data: ['id']}, 
+                        {name: 'online', attr: 'data-online'},
+                        'teacher_name', 
+                        'class_time', 
+                        'class_duration', 
+                        'class_location',
+                        'livestream_inperson'
+                    ]
     }
 
     ribbon_event_list = new List(eventList, listOptions)
@@ -199,14 +271,17 @@ const buildEventLineItem = (e) => {
         live_or_location = e.location;
     } else live_or_location = `<img height="20px" width="20px" src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@main/assets/noun_streaming_55528.png" alt="streaming by Javier Sánchez - javyliu from the Noun Project" ><span class="livestream_label">Livestream</span>`
 
+    let onlineFlag = e.online == true ? "livestream" : "inperson";
+
     let lineItem = document.createElement("li");
     lineItem.setAttribute("data-id", dayjs(e.dateTime).format("DDMMYYYY"));
-    lineItem.setAttribute("data-online", e.online == true ? "livestream" : "in-person");
+    // lineItem.setAttribute("data-online", e.online == true ? "livestream" : "inperson");
     lineItem.classList.add('schedule_item');
     lineItem.innerHTML =   `<div class="time_dur">
                                 <span class="class_time">${dayjs(e.dateTime).format("hh:mm A")}</span><br>
                                 <span class="class_duration">${e.duration} min</span>
                                 <span class="class_location mobile_loc">${live_or_location}</span>
+                                <span class="livestream_inperson">${onlineFlag}</span>
                             </div>
                             <div class="class_location_container desktop_loc">
                                 <span class="class_location">${live_or_location}</span>
@@ -229,7 +304,7 @@ const buildEventLineItem = (e) => {
     eTitle.classList.add("event_title");
     eTitle.innerHTML = `<span>${e.title}</span><br><span class="teacher_name">${e.teacher || "No Teacher"}</span>`;
 
-    lineItem.appendChild(eTitle)
+    lineItem.appendChild(eTitle);
 
     if(dayjs(e.dateTime).isBefore(dayjs()) == false ){
         lineItem.appendChild(signUpButton);
@@ -239,7 +314,7 @@ const buildEventLineItem = (e) => {
         passedButton.innerHTML = "<div class='sign_up_button disabled_sign_up'>Closed</div>";
         passedButton.disabled = true;
 
-        lineItem.append(passedButton)
+        lineItem.append(passedButton);
     }
 
     return lineItem;
@@ -310,6 +385,7 @@ const createUI = (elem, week, refDay) => {
 const buildTeacherDropdown = (t) => {
     let genSelect = document.createElement("select");
     genSelect.classList.add("list_filter");
+    genSelect.id = "teacher_filter";
 
     let selectAll = document.createElement("option");
 
@@ -339,8 +415,9 @@ const buildTeacherDropdown = (t) => {
 const buildEventTypeDropdown = () => {
     let genSelect = document.createElement("select");
     genSelect.classList.add("list_filter");
+    genSelect.id = "eventType_filter";
 
-    genSelect.innerHTML =  `<option value="">All</option><option value="in-person">In Person</option><option value="livestream">Livestream</option>`;
+    genSelect.innerHTML =  `<option value="">All</option><option value="inperson">In Person</option><option value="livestream">Livestream</option>`;
 
     return genSelect;
 }
@@ -348,6 +425,7 @@ const buildEventTypeDropdown = () => {
 const buildLocationDropdown = (ev) => {
     let genSelect = document.createElement("select");
     genSelect.classList.add("list_filter");
+    genSelect.id = "location_filter";
 
     let selectAll = document.createElement("option");
 

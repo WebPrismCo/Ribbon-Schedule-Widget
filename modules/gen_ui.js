@@ -47,14 +47,17 @@ const buildEventLineItem = (e) => {
         live_or_location = e.location;
     } else live_or_location = `<img height="20px" width="20px" src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@main/assets/noun_streaming_55528.png" alt="streaming by Javier Sánchez - javyliu from the Noun Project" ><span class="livestream_label">Livestream</span>`
 
+    let onlineFlag = e.online == true ? "livestream" : "inperson";
+
     let lineItem = document.createElement("li");
     lineItem.setAttribute("data-id", dayjs(e.dateTime).format("DDMMYYYY"));
-    lineItem.setAttribute("data-online", e.online == true ? "livestream" : "in-person");
+    // lineItem.setAttribute("data-online", e.online == true ? "livestream" : "inperson");
     lineItem.classList.add('schedule_item');
     lineItem.innerHTML =   `<div class="time_dur">
                                 <span class="class_time">${dayjs(e.dateTime).format("hh:mm A")}</span><br>
                                 <span class="class_duration">${e.duration} min</span>
                                 <span class="class_location mobile_loc">${live_or_location}</span>
+                                <span class="livestream_inperson">${onlineFlag}</span>
                             </div>
                             <div class="class_location_container desktop_loc">
                                 <span class="class_location">${live_or_location}</span>
@@ -77,7 +80,7 @@ const buildEventLineItem = (e) => {
     eTitle.classList.add("event_title");
     eTitle.innerHTML = `<span>${e.title}</span><br><span class="teacher_name">${e.teacher || "No Teacher"}</span>`;
 
-    lineItem.appendChild(eTitle)
+    lineItem.appendChild(eTitle);
 
     if(dayjs(e.dateTime).isBefore(dayjs()) == false ){
         lineItem.appendChild(signUpButton);
@@ -87,7 +90,7 @@ const buildEventLineItem = (e) => {
         passedButton.innerHTML = "<div class='sign_up_button disabled_sign_up'>Closed</div>";
         passedButton.disabled = true;
 
-        lineItem.append(passedButton)
+        lineItem.append(passedButton);
     }
 
     return lineItem;
@@ -158,6 +161,7 @@ const createUI = (elem, week, refDay) => {
 const buildTeacherDropdown = (t) => {
     let genSelect = document.createElement("select");
     genSelect.classList.add("list_filter");
+    genSelect.id = "teacher_filter";
 
     let selectAll = document.createElement("option");
 
@@ -187,8 +191,9 @@ const buildTeacherDropdown = (t) => {
 const buildEventTypeDropdown = () => {
     let genSelect = document.createElement("select");
     genSelect.classList.add("list_filter");
+    genSelect.id = "eventType_filter";
 
-    genSelect.innerHTML =  `<option value="">All</option><option value="in-person">In Person</option><option value="livestream">Livestream</option>`;
+    genSelect.innerHTML =  `<option value="">All</option><option value="inperson">In Person</option><option value="livestream">Livestream</option>`;
 
     return genSelect;
 }
@@ -196,6 +201,7 @@ const buildEventTypeDropdown = () => {
 const buildLocationDropdown = (ev) => {
     let genSelect = document.createElement("select");
     genSelect.classList.add("list_filter");
+    genSelect.id = "location_filter";
 
     let selectAll = document.createElement("option");
 

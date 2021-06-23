@@ -206,6 +206,12 @@ button {
     cursor: no-drop;
 }
 
+.livestream_inperson {
+    display: none;
+    padding: none;
+    margin: none;
+}
+
 @media screen and (min-width: 769px){
     .mobile_loc {
         display: none;
