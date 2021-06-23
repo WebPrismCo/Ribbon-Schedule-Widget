@@ -60,18 +60,14 @@ const fire_search = () => {
 
     filters.forEach((f) => {
         if(f.disabled == false){
-            console.log(f.value);
             f.value == "" ? "" :  filter_string = filter_string + f.value + " "
         }
     });
-
-    console.log(filter_string);
 
     ribbon_event_list.search(filter_string);
 }
 
 const setFilterParams = (params) => {
-    console.log(params);
     let search_string = '';
 
     function elemSelect(e,v){
@@ -99,8 +95,6 @@ const setFilterParams = (params) => {
 
         search_string = search_string + `"${params.location}" `;
     }
-
-    console.log(search_string);
 
     ribbon_event_list.search(search_string);
 }
