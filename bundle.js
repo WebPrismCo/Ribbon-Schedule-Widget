@@ -7,7 +7,6 @@ var customParseFormat = require('dayjs/plugin/customParseFormat');
 const List = require('list.js');
 dayjs.extend(customParseFormat);
 
-
 //load external css
 var cssId = 'ribbon-schedule-custom-css';  // you could encode the css path itself to generate id..
 if (!document.getElementById(cssId))
@@ -73,9 +72,21 @@ const setFilterParams = (params) => {
     function elemSelect(e,v){
         let doesValExist = document.getElementById(e).querySelector('[value="' + v + '"]');
 
+        console.log(doesValExist);
+
         if(document.getElementById(e) !== null && doesValExist !== null){
             document.getElementById(e).value = v;
+        } else if(document.getElementById(e) !== null && doesValExist == null){
+            let filterOption = document.createElement("option");
+
+            filterOption.value = params.teacher;
+            filterOption.innerHTML = params.teacher;
+            
+            document.getElementById(e).appendChild(filterOption);
+
+            document.getElementById(e).value = v;
         }
+
     }
 
     if(params.teacher !== undefined){
@@ -168,11 +179,21 @@ const init_list = () => {
 const initSchedule = () => {
     ui.createUI(container, week, refDay);
     dates.findRefDay(refDay);
+
     setWeekEvents(ribbonEvents);
     ui.buildEventList(refDayEvents);
+
     init_list();
     addDayListeners();
-    addFilterListeners();
+
+    if(refDayEvents.length > 0){
+        addFilterListeners();
+        setFilterParams({
+            teacher: got_teacher,
+            eventType: got_eventType,
+            location: got_location
+        });
+    }
 }
 
 const resetSchedule = (w) => {
@@ -287,9 +308,9 @@ const buildEventLineItem = (e) => {
 
     if( e.image2 !== null){
         let teacherImg = document.createElement('div');
-        teacherImg.style.backgroundImage = `url(${encodeURI(e.image2)})`;
-        teacherImg.style.backgroundSize = 'cover';
         teacherImg.classList.add("teacher_img");
+        teacherImg.style.backgroundImage = `url("${encodeURI(e.image2)}")`;
+        teacherImg.style.backgroundSize = 'cover';
 
         lineItem.appendChild(teacherImg);
     }
@@ -323,7 +344,7 @@ const returnEmptyMessage = () => {
         }
     }
 
-    return `<div class="no_events"><img height='100px' width='100px' src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@latest/assets/noun_empty_glass_1245571.png" alt='empty glass by Waiyi Fung from the Noun Project'><p>No Events Today</p></div>`
+    return `<div class="no_events"><img height='100px' width='100px' src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@latest/assets/noun_empty_glass_1245571.png" alt='empty glass by Waiyi Fung from the Noun Project'><p>No Matching Events</p></div>`
 }
 
 const buildEventList = (ribbonEvents) => {

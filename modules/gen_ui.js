@@ -69,9 +69,9 @@ const buildEventLineItem = (e) => {
 
     if( e.image2 !== null){
         let teacherImg = document.createElement('div');
-        teacherImg.style.backgroundImage = `url(${encodeURI(e.image2)})`;
-        teacherImg.style.backgroundSize = 'cover';
         teacherImg.classList.add("teacher_img");
+        teacherImg.style.backgroundImage = `url("${encodeURI(e.image2)}")`;
+        teacherImg.style.backgroundSize = 'cover';
 
         lineItem.appendChild(teacherImg);
     }
@@ -105,7 +105,7 @@ const returnEmptyMessage = () => {
         }
     }
 
-    return `<div class="no_events"><img height='100px' width='100px' src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@latest/assets/noun_empty_glass_1245571.png" alt='empty glass by Waiyi Fung from the Noun Project'><p>No Events Today</p></div>`
+    return `<div class="no_events"><img height='100px' width='100px' src="https://cdn.jsdelivr.net/gh/WebPrismCo/Ribbon-Schedule-Widget@latest/assets/noun_empty_glass_1245571.png" alt='empty glass by Waiyi Fung from the Noun Project'><p>No Matching Events</p></div>`
 }
 
 const buildEventList = (ribbonEvents) => {

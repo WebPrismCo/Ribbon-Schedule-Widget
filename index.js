@@ -6,7 +6,6 @@ var customParseFormat = require('dayjs/plugin/customParseFormat');
 const List = require('list.js');
 dayjs.extend(customParseFormat);
 
-
 //load external css
 var cssId = 'ribbon-schedule-custom-css';  // you could encode the css path itself to generate id..
 if (!document.getElementById(cssId))
@@ -72,9 +71,21 @@ const setFilterParams = (params) => {
     function elemSelect(e,v){
         let doesValExist = document.getElementById(e).querySelector('[value="' + v + '"]');
 
+        console.log(doesValExist);
+
         if(document.getElementById(e) !== null && doesValExist !== null){
             document.getElementById(e).value = v;
+        } else if(document.getElementById(e) !== null && doesValExist == null){
+            let filterOption = document.createElement("option");
+
+            filterOption.value = params.teacher;
+            filterOption.innerHTML = params.teacher;
+            
+            document.getElementById(e).appendChild(filterOption);
+
+            document.getElementById(e).value = v;
         }
+
     }
 
     if(params.teacher !== undefined){
@@ -167,11 +178,21 @@ const init_list = () => {
 const initSchedule = () => {
     ui.createUI(container, week, refDay);
     dates.findRefDay(refDay);
+
     setWeekEvents(ribbonEvents);
     ui.buildEventList(refDayEvents);
+
     init_list();
     addDayListeners();
-    addFilterListeners();
+
+    if(refDayEvents.length > 0){
+        addFilterListeners();
+        setFilterParams({
+            teacher: got_teacher,
+            eventType: got_eventType,
+            location: got_location
+        });
+    }
 }
 
 const resetSchedule = (w) => {
