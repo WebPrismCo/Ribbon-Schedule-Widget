@@ -132,7 +132,6 @@ const addDayListeners = () => {
             resetEventList();
         })
     })
-
 }
 
 const addFilterListeners = () => {
@@ -173,6 +172,14 @@ const init_list = () => {
                 }
             }
         });
+
+    ribbon_event_list.sort('class_time', {
+        sortFunction: (a,b) => {
+            console.log(a.elm.attributes["data-classtime"].value)
+            if(dayjs(a.elm.attributes["data-classtime"].value).isBefore(dayjs(b.elm.attributes["data-classtime"].value))) return -1;
+            else return 1;
+        }
+    });
 }
 
 const initSchedule = () => {
@@ -193,6 +200,7 @@ const initSchedule = () => {
             location: got_location
         });
     }
+
 }
 
 const resetSchedule = (w) => {

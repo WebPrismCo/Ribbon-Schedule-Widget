@@ -133,7 +133,6 @@ const addDayListeners = () => {
             resetEventList();
         })
     })
-
 }
 
 const addFilterListeners = () => {
@@ -174,6 +173,14 @@ const init_list = () => {
                 }
             }
         });
+
+    ribbon_event_list.sort('class_time', {
+        sortFunction: (a,b) => {
+            console.log(a.elm.attributes["data-classtime"].value)
+            if(dayjs(a.elm.attributes["data-classtime"].value).isBefore(dayjs(b.elm.attributes["data-classtime"].value))) return -1;
+            else return 1;
+        }
+    });
 }
 
 const initSchedule = () => {
@@ -194,6 +201,7 @@ const initSchedule = () => {
             location: got_location
         });
     }
+
 }
 
 const resetSchedule = (w) => {
@@ -290,6 +298,7 @@ const buildEventLineItem = (e) => {
 
     let lineItem = document.createElement("li");
     lineItem.setAttribute("data-id", dayjs(e.dateTime).format("DDMMYYYY"));
+    lineItem.setAttribute("data-classtime", e.dateTime);
     // lineItem.setAttribute("data-online", e.online == true ? "livestream" : "inperson");
     lineItem.classList.add('schedule_item');
     lineItem.innerHTML =   `<div class="time_dur">

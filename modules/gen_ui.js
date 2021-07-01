@@ -51,6 +51,7 @@ const buildEventLineItem = (e) => {
 
     let lineItem = document.createElement("li");
     lineItem.setAttribute("data-id", dayjs(e.dateTime).format("DDMMYYYY"));
+    lineItem.setAttribute("data-classtime", e.dateTime);
     // lineItem.setAttribute("data-online", e.online == true ? "livestream" : "inperson");
     lineItem.classList.add('schedule_item');
     lineItem.innerHTML =   `<div class="time_dur">
